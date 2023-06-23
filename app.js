@@ -5,7 +5,6 @@ const multer = require('multer');
 const port = 4000||process.env.PORT;
 const cors = require("cors");
 const Image = require("./db/dbschema");
-app.use(cors());
 app.use('/uploads', express.static('./uploads'));
 
 // Connect to MongoDB using Mongoose
@@ -92,6 +91,8 @@ app.delete('/delete', async (req, res) => {
     res.status(500).json({ message: 'Error deleting user and associated image.', error: error.message });
   }
 });
+
+app.use(cors());
 
 
 // Start the server
