@@ -7,6 +7,15 @@ const cors = require("cors");
 const Image = require("./db/dbschema");
 app.use('/uploads', express.static('./uploads'));
 
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions)) 
+
+
 // Connect to MongoDB using Mongoose
 mongoose.connect('mongodb://proboys777333:pritambhai@ac-rrmx7kp-shard-00-00.5kqktya.mongodb.net:27017,ac-rrmx7kp-shard-00-01.5kqktya.mongodb.net:27017,ac-rrmx7kp-shard-00-02.5kqktya.mongodb.net:27017/?ssl=true&replicaSet=atlas-67jp7r-shard-0&authSource=admin&retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -92,13 +101,6 @@ app.delete('/delete', async (req, res) => {
   }
 });
 
-const corsOptions ={
-   origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
-}
-
-app.use(cors(corsOptions)) 
 
 // Start the server
 app.listen(port, () => {
