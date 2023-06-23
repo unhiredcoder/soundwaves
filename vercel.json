@@ -1,14 +1,9 @@
 {
-    "routes": [
-      {
-        "src": "/api/.*",
-        "methods": ["GET", "POST", "OPTIONS", "DELETE"],
-        "headers": {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, DELETE",
-          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-        }
-      }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    { "src": "app.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "app.js" }
+  ]
+}
