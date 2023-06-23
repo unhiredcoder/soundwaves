@@ -92,8 +92,13 @@ app.delete('/delete', async (req, res) => {
   }
 });
 
-app.use(cors());
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
 
+app.use(cors(corsOptions)) 
 
 // Start the server
 app.listen(port, () => {
