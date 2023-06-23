@@ -61,6 +61,10 @@ app.post('/upload', upload.fields([{ name: 'image' }, { name: 'audio'}]), async 
 });
 
 
+app.get("/",async (req,res)=>{
+  res.send("i am live")
+})
+
 app.get('/users', async (req, res) => {
   const users = await Image.find();
   res.status(200).json(users);
