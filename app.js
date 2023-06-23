@@ -70,12 +70,22 @@ app.post('/upload', upload.fields([{ name: 'image' }, { name: 'audio'}]), async 
   }
 });
 
+//@@@@@@@@@@ VERY IMPORTANT LINES  @@@@@@@@@@@@@@@@@@@@@@
+//why ? => i did this coz i am getting cors err which is not resolving , i got an idea to deploy both client&server on same origin to avoid cors issue other than that there is all code of client in my soundwaveclient repo, 
+// Note :- in this repo dist is build version of client code (vitejs) which is statically serve here 
+//_________________________________________________________________________________________________________
 //serve whole react as path "/"
-const frontendBuildPath = path.resolve(__dirname, "../client/dist");
+const frontendBuildPath = path.resolve(__dirname, "dist");
 app.use(express.static(frontendBuildPath));
+console.log(frontendBuildPath);
+// Serve the frontend on the root URL
 app.get("/", (req, res) => {
   res.sendFile(path.join(frontendBuildPath, "index.html"));
 });
+//_________________________________________________________________________________________________________
+
+
+
 
 
 app.get("/check",async (req,res)=>{
