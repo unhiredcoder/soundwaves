@@ -4,16 +4,18 @@ const mongoose = require("mongoose");
 const multer = require('multer');
 const port = 4000||process.env.PORT;
 const cors = require("cors");
+const path=require("path")
+const fs = require("fs");
 const Image = require("./db/dbschema");
 app.use('/uploads', express.static('./uploads'));
 
-const corsOptions ={
-  origin:'*', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200,
-}
+// const corsOptions ={
+//   origin:'*', 
+//   credentials:true,            //access-control-allow-credentials:true
+//   optionSuccessStatus:200,
+// }
 
-app.use(cors(corsOptions)) 
+app.use(cors()) 
 
 
 // Connect to MongoDB using Mongoose
@@ -68,8 +70,15 @@ app.post('/upload', upload.fields([{ name: 'image' }, { name: 'audio'}]), async 
   }
 });
 
+//serve whole react as path "/"
+const frontendBuildPath = path.resolve(__dirname, "../client/dist");
+app.use(express.static(frontendBuildPath));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(frontendBuildPath, "index.html"));
+});
 
-app.get("/",async (req,res)=>{
+
+app.get("/check",async (req,res)=>{
   res.send("i am live")
 })
 
@@ -80,8 +89,6 @@ app.get('/users', async (req, res) => {
 
 
 
-const path=require("path")
-const fs = require("fs");
 
 app.delete('/delete', async (req, res) => {
   const { _id, image, audio } = req.body;
