@@ -9,13 +9,11 @@ const fs = require("fs");
 const Image = require("./db/dbschema");
 app.use('/uploads', express.static('./uploads'));
 
-// const corsOptions ={
-//   origin:'*', 
-//   credentials:true,            //access-control-allow-credentials:true
-//   optionSuccessStatus:200,
-// }
 
-app.use(cors()) 
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "DELETE"]
+}));
 
 
 // Connect to MongoDB using Mongoose
