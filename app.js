@@ -7,7 +7,6 @@ const cors = require("cors");
 const path=require("path")
 const fs = require("fs");
 const Image = require("./db/dbschema");
-const bodyParser = require('body-parser');
 app.use('/uploads', express.static('./uploads'));
 
 
@@ -28,9 +27,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-app.use(express.json());
-app.use(bodyParser,bodyParser.urlencoded({extended:true,parameterLimit:10000,limit:"500mb"})); // Set body parser with 500MB limit
-app.use(bodyParser.json())
+app.use(express.json({ limit: '500mb' }));
 
 
 
