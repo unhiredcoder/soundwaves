@@ -7,6 +7,7 @@ const cors = require("cors");
 const path=require("path")
 const fs = require("fs");
 const Image = require("./db/dbschema");
+const bodyParser = require('body-parser');
 app.use('/uploads', express.static('./uploads'));
 
 
@@ -28,6 +29,9 @@ db.once('open', () => {
 });
 
 app.use(express.json());
+app.use(bodyParser,bodyParser.urlencoded({extended:true,parameterLimit:10000,limit:"500mb"})); // Set body parser with 500MB limit
+app.use(bodyParser.json())
+
 
 
 const upload = multer({
@@ -73,13 +77,13 @@ app.post('/upload', upload.fields([{ name: 'image' }, { name: 'audio'}]), async 
 // Note :- in this repo dist is build version of client code (vitejs) which is statically serve here 
 //_________________________________________________________________________________________________________
 //serve whole react as path "/"
-const frontendBuildPath = path.resolve(__dirname, "dist");
-app.use(express.static(frontendBuildPath));
-console.log(frontendBuildPath);
-// Serve the frontend on the root URL
-app.get("/", (req, res) => {
-  res.sendFile(path.join(frontendBuildPath, "index.html"));
-});
+// const frontendBuildPath = path.resolve(__dirname, "dist");
+// app.use(express.static(frontendBuildPath));
+// console.log(frontendBuildPath);
+// // Serve the frontend on the root URL
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(frontendBuildPath, "index.html"));
+// });
 //_________________________________________________________________________________________________________
 
 
