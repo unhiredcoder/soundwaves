@@ -7,7 +7,6 @@ const cors = require("cors");
 const path=require("path")
 const fs = require("fs");
 const Image = require("./db/dbschema");
-app.use('/uploads', express.static('./uploads'));
 
 
 app.use(cors({
@@ -30,6 +29,7 @@ db.once('open', () => {
 app.use(express.json({ limit: '500mb' }));
 
 
+app.use('/uploads', express.static('./uploads'));
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -68,6 +68,10 @@ app.post('/upload', upload.fields([{ name: 'image' }, { name: 'audio'}]), async 
     res.status(500).send('Error uploading image and audio.');
   }
 });
+
+
+
+//Read this if dist folder id available in this repo 
 
 //@@@@@@@@@@ VERY IMPORTANT LINES  @@@@@@@@@@@@@@@@@@@@@@
 //why ? => i did this coz i am getting cors err which is not resolving , i got an idea to deploy both client&server on same origin to avoid cors issue other than that there is all code of client in my soundwaveclient repo, 
